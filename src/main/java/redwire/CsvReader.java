@@ -193,17 +193,59 @@ public class CsvReader {
     private float getSum(String param){
         float sum = -1;
 
+        if(getParamIndex(param) != -1){
+            int indexAt = getParamIndex(param);
+            if(isNumeric(data.get(0).get(indexAt))){
+                sum = 0;
+                for(int i = 0; i < data.size(); i++){
+                    sum += Float.valueOf(data.get(i).get(indexAt));
+                }
+            }
+        }
+
         return sum;
     }
 
     private HashMap<String, String> getCount(String param){
         HashMap<String, String> count = new HashMap<>();
+        ArrayList<String> seenVars = new ArrayList<>();
+
+        int indexAt = getParamIndex(param);
+        for(int i = 0; i < data.size(); i++){
+            String val = data.get(i).get(indexAt);
+            boolean isSeen = false;
+            for(int c = 0; c < seenVars.size(); c++){
+                if(val.equals(seenVars.get(c))){
+                    isSeen = true;
+                }
+            }
+
+            if(!isSeen){
+                seenVars.add(val);
+            }
+        }
+
+        int total = 0;
+        for(int i = 0; i < seenVars.size(); i++){
+            total = 0;
+            for(int c = 0; c < data.size(); c++){
+                if(seenVars.get(i).equals(data.get(c).get(indexAt))){
+                    total += 1;
+                }
+            }
+            count.put(seenVars.get(i), String.valueOf(total));
+        }
 
         return count;
     }
 
     private float getAverage(String param){
         float average = -1;
+
+        if(getSum(param) != -1){
+            average = 0;
+            average = getSum(param) / data.size();
+        }
 
         return average;
     }
@@ -212,6 +254,18 @@ public class CsvReader {
         float correl = -1;
 
         return correl;
+    }
+
+    private int getParamIndex(String param){
+        int index = -1;
+
+        for(int i = 0; i < headers.size(); i++){
+            if(param.equals(headers.get(i))){
+                index = i;
+            }
+        }
+
+        return index;
     }
 
 }

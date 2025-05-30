@@ -15,7 +15,7 @@ public class App
                 System.out.println("\t"+(i+1)+"-"+csvReader.getHeaders().get(i));
             }
             //SUM, COUNT DISTINCT, Average, Correlation
-            csvReader.analyseData("COUNT|Age|Salary|Name,AVG|Age|Salary");
+            csvReader.analyseData("COUNT|Age|Salary|Name,AVG|Age|Salary,SUM|Age|Salary|Email");
             HashMap<String, HashMap<String, String>> data = csvReader.getAnalysedData();
             for(Map.Entry<String, HashMap<String, String>> entry : data.entrySet()){
                 String outerKey = entry.getKey();

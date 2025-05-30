@@ -49,11 +49,19 @@ public class CsvReader {
                 for(int c = 1; c < paramDiv.length; c++){
                     analysedData.put("COUNT-"+paramDiv[c], getCount(paramDiv[c]));
                 }
-                
             } else if(paramDiv[0].equals("AVG")) {
+                HashMap<String, String> avg = new HashMap<>();
+                for(int c = 1; c < paramDiv.length; c++){
+                    avg.put(paramDiv[c], String.valueOf(getAverage(paramDiv[c])));
+                }
+                analysedData.put("AVG", avg);
 
             } else if(paramDiv[0].equals("CORREL")) {
-
+                HashMap<String, String> cor = new HashMap<>();
+                for(int c = 1; c < paramDiv.length; c++){
+                    cor.put(paramDiv[c], String.valueOf(getCorrelation(paramDiv[c])));
+                }
+                analysedData.put("CORRELATION", cor);
             }
         }
         return true;
@@ -182,8 +190,8 @@ public class CsvReader {
         return true;
     }
 
-    private int getSum(String param){
-        int sum = -1;
+    private float getSum(String param){
+        float sum = -1;
 
         return sum;
     }
@@ -194,14 +202,14 @@ public class CsvReader {
         return count;
     }
 
-    private HashMap<String, String> getAverage(String param){
-        HashMap<String, String> average = new HashMap<>();
+    private float getAverage(String param){
+        float average = -1;
 
         return average;
     }
 
-    private HashMap<String, String> getCorrelation(String param){
-        HashMap<String, String> correl = new HashMap<>();
+    private float getCorrelation(String param){
+        float correl = -1;
 
         return correl;
     }
